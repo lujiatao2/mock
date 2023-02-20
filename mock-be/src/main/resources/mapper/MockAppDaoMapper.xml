@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lujiatao.mock.service.repository.MockAppDao">
+
+    <insert id="insert">
+        INSERT INTO mock_app (app_env, app_name, ip, `port`, version, is_enable)
+        VALUES (#{appEnv}, #{appName}, #{ip}, #{port}, #{version}, #{isEnable})
+    </insert>
+
+    <update id="update">
+        UPDATE mock_app
+        SET app_env   = #{appEnv},
+            app_name  = #{appName},
+            ip        = #{ip},
+            `port`    = #{port},
+            version   = #{version},
+            is_enable = #{isEnable}
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectById" resultType="com.lujiatao.mock.common.entity.MockApp">
+        SELECT *
+        FROM mock_app
+        WHERE id = #{id}
+    </select>
+
+    <select id="select" resultType="com.lujiatao.mock.common.entity.MockApp">
+        SELECT * FROM mock_app
+        <where>
+            <if test="appEnv != null and appEnv != ''">
+                AND app_env = #{appEnv}
+            </if>
+            <if test="appName != null and appName != ''">
+                AND app_name = #{appName}
+            </if>
+            <if test="ip != null and ip != ''">
+                AND ip = #{ip}
+            </if>
+            <if test="port != null and port != ''">
+                AND port = #{port}
+            </if>
+            <if test="isEnable == 'true'">
+                AND is_enable = 1
+            </if>
+            <if test="isEnable == 'false'">
+                AND is_enable = 0
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+    <select id="selectAll" resultType="com.lujiatao.mock.common.entity.MockApp">
+        SELECT *
+        FROM mock_app
+        ORDER BY id DESC
+    </select>
+
+</mapper>

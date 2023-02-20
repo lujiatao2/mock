@@ -1,0 +1,38 @@
+version: "3.3"
+services:
+  mock-mysql:
+    image: mysql:5.7.33
+    container_name: mock-mysql
+    restart: always
+    ports:
+      - "10000:3306"
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=root123456
+      - MYSQL_DATABASE=mock
+      - TZ=Asia/Shanghai
+    command: --character-set-server=utf8
+    volumes:
+      - /opt/mysql/mock:/var/lib/mysql
+  mock-be:
+    image: registry.cn-chengdu.aliyuncs.com/lujiatao/mock-be:1.0.0
+    container_name: mock-be
+    restart: always
+    ports:
+      - "10001:8080"
+    environment:
+      - MYSQL_URL=jdbc:mysql://mock-mysql:3306/mock
+    depends_on:
+      - mock-mysql
+  mock-fe:
+    image: registry.cn-chengdu.aliyuncs.com/lujiatao/mock-fe:1.0.0
+    container_name: mock-fe
+    restart: always
+    ports:
+      - "10002:80"
+    environment:
+      - MOCK_BE_IP=192.168.3.102
+      - MOCK_BE_PORT=10001
+      - MOCK_FE_PORT=10002
+    depends_on:
+      - mock-be

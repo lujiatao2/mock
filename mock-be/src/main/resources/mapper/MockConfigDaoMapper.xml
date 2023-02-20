@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lujiatao.mock.service.repository.MockConfigDao">
+
+    <insert id="insert">
+        INSERT INTO mock_config (app_env, app_name, mock_class, mock_method, parameter_rules, return_or_throw_data,
+                                 is_enable)
+        VALUES (#{appEnv}, #{appName}, #{mockClass}, #{mockMethod}, #{parameterRules}, #{returnOrThrowData},
+                #{isEnable})
+    </insert>
+
+    <update id="update">
+        UPDATE mock_config
+        SET app_env              = #{appEnv},
+            app_name             = #{appName},
+            mock_class           = #{mockClass},
+            mock_method          = #{mockMethod},
+            parameter_rules      = #{parameterRules},
+            return_or_throw_data = #{returnOrThrowData},
+            is_enable            = #{isEnable}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE
+        FROM mock_config
+        WHERE id = #{id}
+    </delete>
+
+    <select id="selectById" resultType="com.lujiatao.mock.common.entity.MockConfig">
+        SELECT *
+        FROM mock_config
+        WHERE id = #{id}
+    </select>
+
+    <select id="select" resultType="com.lujiatao.mock.common.entity.MockConfig">
+        SELECT * FROM mock_config
+        <where>
+            <if test="appEnv != null and appEnv != ''">
+                AND app_env = #{appEnv}
+            </if>
+            <if test="appName != null and appName != ''">
+                AND app_name = #{appName}
+            </if>
+            <if test="mockClass != null and mockClass != ''">
+                AND mock_class = #{mockClass}
+            </if>
+            <if test="mockMethod != null and mockMethod != ''">
+                AND mock_method = #{mockMethod}
+            </if>
+            <if test="isEnable == 'true'">
+                AND is_enable = 1
+            </if>
+            <if test="isEnable == 'false'">
+                AND is_enable = 0
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+    <select id="selectAll" resultType="com.lujiatao.mock.common.entity.MockConfig">
+        SELECT *
+        FROM mock_config
+        ORDER BY id DESC
+    </select>
+
+</mapper>
