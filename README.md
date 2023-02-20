@@ -19,13 +19,13 @@ Suite等客户端的代理调试工具，Mock的优势在于可以对调用链�
   Sandbox只支持Linux、Unix和macOS操作系统，因此Mock模块也只能在这些操作系统上安装。
 * Mock控制台后端：即本工程中的mock-be。它是Mock控制台的后端服务，使用MySQL作为数据库。
 * Mock控制台前端：即[mock-fe](https://github.com/lujiatao2/mock-fe)工程。它是Mock控制台的前端服务。
-* 示例应用程序：即本工程中的mock-example-app。示例应用程序提供多个示例接口（详见），以便用户学习使用。
+* 示例应用程序：即本工程中的mock-example-app。示例应用程序提供多个示例接口，以便用户学习使用。
 
 # 2 安装
 
 &emsp;&emsp;由于安装过程会用到一些基础工具（比如wget），若提示“未找到命令”或“command not
 found”，则需要先安装对应的基础工具。  
-&emsp;&emsp;演示安装过程的服务器IP地址为192.168.3.102，需根据实际情况进行修改。
+&emsp;&emsp;演示安装过程的服务器IP地址为192.168.3.102，用户需根据实际情况进行修改。
 
 ## 2.1 安装Mock模块
 
@@ -80,7 +80,7 @@ chmod +x install-local.sh
 ## 2.2 安装Mock控制台
 
 &emsp;&emsp;由于Mock控制台使用的是常用技术栈，因此安装方式很多，这里仅以Docker来演示安装过程，容器管理使用Docker
-Compose（也可以使用Docker Swarm或Kubernetes等）。  
+Compose（当然也可以使用Docker Swarm或Kubernetes等）。  
 &emsp;&emsp;新增docker-compose.yml文件，文件内容如下：
 
 ```yaml
@@ -152,7 +152,7 @@ mock-fe      /docker-entrypoint.sh /bin ...   Up      0.0.0.0:10002->80/tcp
 mock-mysql   docker-entrypoint.sh --cha ...   Up      0.0.0.0:10000->3306/tcp, 33060/tcp
 ```
 
-&emsp;&emsp;访问http://192.168.3.102:10002/显示Mock控制台首页，如下图所示：
+&emsp;&emsp;访问 http://192.168.3.102:10002/ 显示Mock控制台首页，如下图所示：
 
 ![Mock控制台首页](https://raw.githubusercontent.com/lujiatao2/mock/master/src/main/resources/img/img-01.png)
 
@@ -202,7 +202,7 @@ curl http://192.168.3.102:8090/mock-example-app/by-id?id=1
 }
 ```
 
-&emsp;&emsp;示例应用程序接口详见[5.1 示例应用程序接口](https://github.com/lujiatao2/mock#5.1%20%E7%A4%BA%E4%BE%8B%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%8E%A5%E5%8F%A3)。
+&emsp;&emsp;示例应用程序接口详见[5.1 示例应用程序接口](https://github.com/lujiatao2/mock#51-%E7%A4%BA%E4%BE%8B%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%8E%A5%E5%8F%A3)。
 
 ## 3.2 配置Mock模块
 
@@ -210,7 +210,7 @@ curl http://192.168.3.102:8090/mock-example-app/by-id?id=1
 
 * app.env：Mock应用环境，比如development、test、demo、production等，需根据实际情况进行修改，缺省值是unknown。
 * app.name：Mock应用名称，比如order-server、pay-server等，需根据实际情况进行修改，缺省值是unknown。
-* mock.be.url：Mock控制台后端URL地址，需根据实际情况进行修改，缺省值是http://127.0.0.1:80。
+* mock.be.url：Mock控制台后端URL地址，需根据实际情况进行修改，缺省值是 http://127.0.0.1:80 。
 
 &emsp;&emsp;以下是演示使用的配置：
 
@@ -239,7 +239,7 @@ cd ~/sandbox/bin/
 ```
 
 &emsp;&emsp;-p命令指定的是目标应用程序的进程号，这里使用了ps命令，并结合grep和awk命令查询进程号。  
-&emsp;&emsp;访问http://192.168.3.102:10002/mock-app，可以看到目标应用程序已经接入Mock控制台：
+&emsp;&emsp;访问 http://192.168.3.102:10002/mock-app ，可以看到目标应用程序已经接入了Mock控制台：
 
 ![Mock应用](https://raw.githubusercontent.com/lujiatao2/mock/master/src/main/resources/img/img-02.png)
 
@@ -255,7 +255,7 @@ cd ~/sandbox/bin/
 
 ![新增Mock配置](https://raw.githubusercontent.com/lujiatao2/mock/master/src/main/resources/img/img-04.png)
 
-&emsp;&emsp;以上配置将/mock-example-app/by-id接口的所有请求都返回以下数据：
+&emsp;&emsp;以上配置将/mock-example-app/by-id接口的所有请求都返回以下硬编码的数据：
 
 ```json
 {
@@ -296,7 +296,7 @@ curl http://192.168.3.102:8090/mock-example-app/by-id?id=1
 
 ### 4.2.1 全参数匹配
 
-&emsp;&emsp;当id大于等于5时返回真实数据，小于5时返回Mock数据，可以这样来配置：
+&emsp;&emsp;当id大于等于5时返回Mock数据，小于5时返回真实数据，可以这样来配置：
 
 ![动态Mock](https://raw.githubusercontent.com/lujiatao2/mock/master/src/main/resources/img/img-06.png)
 
@@ -597,7 +597,7 @@ Boolean aBooleanParameter)，接口返回值如下：
 &emsp;&emsp;对应的方法为com.lujiatao.mock.example.app.MockExampleAppController#getLong()，接口返回值如下：
 
 ```text
-7L
+7
 ```
 
 ### 5.1.12 /mock-example-app/a-long
@@ -605,7 +605,7 @@ Boolean aBooleanParameter)，接口返回值如下：
 &emsp;&emsp;对应的方法为com.lujiatao.mock.example.app.MockExampleAppController#getALong()，接口返回值如下：
 
 ```text
-8L
+8
 ```
 
 ### 5.1.13 /mock-example-app/float
@@ -613,7 +613,7 @@ Boolean aBooleanParameter)，接口返回值如下：
 &emsp;&emsp;对应的方法为com.lujiatao.mock.example.app.MockExampleAppController#getFloat()，接口返回值如下：
 
 ```text
-9.0F
+9.0
 ```
 
 ### 5.1.14 /mock-example-app/a-float
@@ -621,7 +621,7 @@ Boolean aBooleanParameter)，接口返回值如下：
 &emsp;&emsp;对应的方法为com.lujiatao.mock.example.app.MockExampleAppController#getAFloat()，接口返回值如下：
 
 ```text
-10.0F
+10.0
 ```
 
 ### 5.1.15 /mock-example-app/double
@@ -661,7 +661,7 @@ false
 &emsp;&emsp;对应的方法为com.lujiatao.mock.example.app.MockExampleAppController#getChar()，接口返回值如下：
 
 ```text
-a
+"a"
 ```
 
 ### 5.1.20 /mock-example-app/character
@@ -669,12 +669,12 @@ a
 &emsp;&emsp;对应的方法为com.lujiatao.mock.example.app.MockExampleAppController#getCharacter()，接口返回值如下：
 
 ```text
-b
+"b"
 ```
 
 ## 5.2 开发者注意事项
 
-&emsp;&emsp;针对想对本项目做Bug修复或二次开发的开发者，有几点需要注意：
+&emsp;&emsp;针对想对本项目做贡献的开发者，有几点需要注意：
 
 * Mock模块使用纯Java开发，确保JDK版本不低于JDK 8。
 * Mock控制台后端使用Spring Boot + MyBatis + MySQL开发，确保JDK版本不低于JDK 8，以及MySQL数据库已安装。服务默认端口为8080，需根据实际情况进行修改。
